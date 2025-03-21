@@ -15,7 +15,7 @@ html {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: 199;
 }
 .contenedor-header header {
   max-width: 1100px;
@@ -625,14 +625,6 @@ footer {
     position: relative;
 }
 
-#animation-container {
-    position: absolute;
-    top: -200px; /* Ajusta según la longitud del cable */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 5px;
-    height: 200px;
-}
 
 #gear-container {
     position: fixed;
@@ -647,95 +639,9 @@ footer {
     color: #333;
     transition: transform 0.2s linear;
 }
-.wave {
-  position: absolute;
-  bottom: 0;
-  height: 120px;
-  width: 100%;
-  background: url(Imagen/wave.png) repeat-x;
-  background-size: 250rem 30rem;
-  animation: animate 15s linear infinite;
-}
 
-@keyframes  animate {
-  0% {
-    background-position-x: 0;
-    background-position-x: -250rem;
-  }
-}
 
-.wave:nth-child(1) {
-  opacity: 0.9;
-}
-
-.wave:nth-child(2) {
-  opacity: 0.5;
-  animation-delay: 0.2s;
-  animation-direction: reverse;
-}
-
-.wave:nth-child(3) {
-  opacity: 0.7;
-  animation-delay: 5s;
-}
 body {
-  margin:0;
-  font-weight:bold;
-  font-family:'Roboto';
-	font-size:20px;
-  background-color:black;	
-}
-
-.main {
-  width:100vw;
-  height:100vh;
-  background-color:black;
-  position:relative;
-	overflow:hidden;
-}
-  
-#prev, #next {
-	background:white;
-	padding:2px 5px;
-	font-weight:200;
-	font-size:15px;
-	cursor:pointer;
-	margin:0 0.5em;
-	width:fit-content;
-	position:absolute;
-	top:0;
-  left:0;
-  transform:transl
-}
-
-#prev {
-	left:20px;
-}
-#next {
-	left:90px;
-}
-
-#carousel-container {
-	width:100%;
-	height:100%;
-	display: flex;
-	flex-flow:column nowrap;
-}
-#carousel-content {
-	height:100%;
-}
-#carousel-dots {
-	position: absolute;
-	bottom:150px;
-}
-#carousel-content, #carousel-dots {
-	width:100%;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-}
-
-.body {
   margin: 0;
   font-weight: bold;
   font-family: 'Roboto';
@@ -744,61 +650,89 @@ body {
 }
 
 .main {
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-  position: relative;
-  overflow: hidden;
-}
-
-#prev, #next {
-  background: white;
-  padding: 2px 5px;
-  font-weight: 200;
-  font-size: 15px;
-  cursor: pointer;
-  margin: 0 0.5em;
-  width: fit-content;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-}
-
-#prev {
-  left: 20px;
-}
-
-#next {
-  right: 20px;
-}
-
-#carousel-container {
-  width: 100%;
-  height: 100%;
+  background-color: #333;
   display: flex;
-  flex-flow: column nowrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 10px;
+}
+#carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px; /* Ajusta según necesidad */
+  margin: 0 auto;
 }
 
 #carousel-content {
-  height: 100%;
-  width: 100%;
+ position: relative;
+  height: 500px; /* Altura fija para el área de cards */
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
+  justify-content: center;
 }
-
 #carousel-dots {
   position: absolute;
-  bottom: 20px;
-  width: 100%;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
+  gap: 10px;
+  z-index: 1001; /* Asegurar visibilidad */
+  background: rgba(255, 255, 255, 0.1); /* Fondo visible */
+  padding: 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px); /* Efecto de vidrio */
+}
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid white;
+  border-radius: 50%;
+  padding: 15px;
+  cursor: pointer;
+  z-index: 100; /* Asegurar que están por encima de todo */
+  transition: all 0.3s ease;
 }
 
+.prev-button {
+  left: 20px;
+}
+
+.next-button {
+  right: 20px;
+}
+
+.carousel-button svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+}
+
+.carousel-button:hover svg {
+  fill: #1cacb6; /* Color dorado al hover */
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.active-dot {
+  background: #1cacb6;
+  box-shadow: 0 0 10px #1cacb6; /* Efecto brillante */
+}
+
+.dragging {
+  transition: transform 0.3s ease-out;
+}
 .card {
   width: 500px;
   height: 300px;
@@ -807,8 +741,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.8s ease-in;
-  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
   border-radius: 7px;
   box-shadow: 0px 0px 45px 5px rgba(0, 0, 0, 0.3);
 }
@@ -843,26 +776,12 @@ body {
   z-index: 0;
 }
 
-.dot {
-  width: 10px;
-  height: 10px;
-  background-color: rgb(200, 200, 200);
-  border-radius: 50%;
-  margin: 0 0.5rem;
-  cursor: pointer;
-}
-
-.active-dot {
-  transform: scale(1.2);
-  background-color: rgb(120, 120, 120);
-}
-
 @keyframes card-in {
-  0% { z-index: 1; }
-  50% { transform: translateX(30%); }
-  80% { z-index: 20; transform: translateX(0px); }
-  100% { transform: translateX(0%); }
+  0% { transform: translateX(30%) scale(0.9); }
+  50% { transform: translateX(15%) scale(0.95); }
+  100% { transform: translateX(0%) scale(1); }
 }
+
 
 @keyframes card-out {
   0% { z-index: 20; transform: translateX(0px); }
@@ -874,4 +793,17 @@ body {
 @keyframes new-card {
   from { transform: translateX(0%) scale(0.5); }
   to { transform: translateX(22%) scale(0.85); }
+}
+#carousel-container {
+  touch-action: pan-y;
+  height: 100vh; /* Ocupar toda la altura */
+  overflow: visible; /* Permitir ver elementos fuera */
+}
+
+.main {
+  overflow: visible !important; /* Eliminar overflow hidden */
+}
+
+.card {
+  pointer-events: auto; /* Permitir interacción */
 }
